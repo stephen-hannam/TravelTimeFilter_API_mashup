@@ -1,0 +1,39 @@
+{
+  "json":
+   { "results":
+      [ { "address_components":
+           [ { "long_name": "130",
+               "short_name": "130",
+               "types": [ "street_number" ] },
+             { "long_name": "University Drive",
+               "short_name": "University Dr",
+               "types": [ "route" ] },
+             { "long_name": "Callaghan",
+               "short_name": "Callaghan",
+               "types": [ "locality", "political" ] },
+             { "long_name": "Newcastle City Council",
+               "short_name": "Newcastle",
+               "types": [ "administrative_area_level_2", "political" ] },
+             { "long_name": "New South Wales",
+               "short_name": "NSW",
+               "types": [ "administrative_area_level_1", "political" ] },
+             { "long_name": "Australia",
+               "short_name": "AU",
+               "types": [ "country", "political" ] },
+             { "long_name": "2308",
+               "short_name": "2308",
+               "types": [ "postal_code" ] } ],
+          "formatted_address": "130 University Dr, Callaghan NSW 2308, Australia",
+          "geometry":
+           { "location": { "lat": -32.8926458, "lng": 151.7038411 },
+             "location_type": "ROOFTOP",
+             "viewport":
+              { "northeast": { "lat": -32.8912968197085, "lng": 151.7051900802915 },
+                "southwest": { "lat": -32.8939947802915, "lng": 151.7024921197085 } } },
+          "place_id": "ChIJxz4BgHsVc2sRn6M8m0Auolk",
+          "plus_code":
+           { "compound_code": "4P43+WG Newcastle, New South Wales, Australia",
+             "global_code": "4RVH4P43+WG" },
+          "types": [ "street_address" ] } ],
+     "status": "OK" }
+}

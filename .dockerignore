@@ -1,0 +1,10 @@
+.dockerignore
+envLH
+envEC2
+.env
+.git
+.gitignore
+.cache
+node_modules/
+*.log
+_*.bak

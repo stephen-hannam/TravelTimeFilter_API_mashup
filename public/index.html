@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.min.css">
+		<script src='/js/EventEmitter/EventEmitter.js'></script>
+</head>
+<body>
+	<header>
+		<noscript>
+			<p id="enable-js">This website requires Javascript to be enabled.</p>
+		</noscript>
+		<p id="waitingon">Idle</p>
+	</header>
+	<div class="area-map-container">
+    <div id="map">
+    </div>
+    <div id="searchpanel">
+				<h4>New Search</h4>
+				<form id="basicsearchdetails">
+					<div style="float:left;margin-right:20px;">
+        		<label for="id">Name your search</label>
+						<input id="newSearchId" name="id" type="text" value="arrive by public transport">
+					</div>
+					<div style="float:left;margin-right:20px;">
+        		<label for="newSearchAddr">at/from address</label>
+						<input id="newSearchAddr" name="newSearchAddr" type="text" value="46 Logan Rd, Woolloongabba QLD 4102" required>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="trans_type">by mode of transportation</label>
+						<select name="trans_type" id="trans_type">
+        		  <option value="public_transport" selected>Public</option>
+        		  <option value="walking">Walking</option>
+        		  <option value="cycling">Cycling</option>
+        		  <option value="coach">Coach</option>
+        		  <option value="bus">Bus</option>
+        		  <option value="ferry">Ferry</option>
+        		  <option value="train">Train</option>
+        		  <option value="driving">Driving</option>
+						</select>
+					</div>
+					<div style="float:left;margin-right:20px;">
+        		<label for="stype">searching by</label>
+        		<select name="stype" id="searchType" onchange="stypeChange()">
+        			<option value="arrive" selected>Arrival Time</option>
+        			<option value="depart">Departure Time</option>
+						</select>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="pt_time">at or by a certain time of</label>
+						<input type="datetime-local" id="pt_time" name="pt_time"
+									 value="2019-09-12T08:30" min="2019-09-07T00:00"
+									 max="2019-10-14T00:00" required>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="trav_time">taking (x minutes)</label>
+						<input type="number" id="trav_time" name="trav_time"
+									 min="10" max="240" value="20" required>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="width">given a window of (x minutes)</label>
+						<input type="number" name="width" id="range"
+									 min="0" max="120" value="0">
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="keyword">and interested in keyword</label>
+						<input type="text" name="keyword" id="keyword" value="school" required>
+					</div>
+				</form>
+    	</div>
+    <div id="advsearchpanel">
+			<h4>Active Searches (for Intersections, Unions and Reload)</h4>
+			<form id="ints_unions">
+				<div style="float:left;margin-right:20px;">
+					<label id="lblActiveSearches" for="search_ids"><span id="numActive"></span></label>
+					<select id="activeSearches" onclick="adviseUser()" onchange="showReloaded()" disabled=true multiple name="search_ids" size=5>
+					</select>
+				</div>
+			</form>
+		</div>
+    <div id="statspanel">
+			<h4>Stats</h4>
+				<form id="seifasform">
+					<div style="float:left;margin-right:20px;">
+        		<label for="IDXTS">Socio-Economic Index</label>
+        		<select multiple size=4 name="IDXTS" id="IDXTS">
+        			<option value="IRSAD" title="IRSAD: Relative Socio-Economic Advantage and Disadvantage" selected>Relative Socio-Economic Advantage and Disadvantage</option>
+        			<option value="IRSD" title="IRSD: Relative Socio-Economic Disadvantage">Relative Socio-Economic Disadvantage</option>
+        			<option value="IER" title="IER: Economic Resources">Economic Resources</option>
+        			<option value="IEO" title="IEO: Education and Occupation">Education and Occupation</option>
+						</select>
+					</div>
+					<div style="float:left;margin-right:20px;">
+        		<label for="MEASS">by Measure</label>
+        		<select multiple size=4 name="MEASS" id="MEASS">
+							 <option value="SCORE" title="SCORE: Score" selected> Score</option>
+               <option value="RWAR" title="RWAR: Rank within Australia">Rank within Australia</option>
+               <option value="RWAD" title="RWAD: Rank within Australia decile">Rank within Australia decile</option>
+               <option value="RWAP" title="RWAP: Rank within Australia percentile">Rank within Australia percentile</option>
+               <option value="RWSR" title="RWSR: Rank within State or Territory">Rank within State or Territory</option>
+               <option value="RWSD" title="RWSD: Rank within state or territory decile">Rank within state or territory decile</option>
+               <option value="RWSP" title="RWSP: Rank within state or territory percentile">Rank within state or territory percentile</option>
+               <option value="MINS" title="MINS: Minimum score for SA1s in area">Minimum score for SA1s in area</option>
+               <option value="MAXS" title="MAXS: Maximum score for SA1s in area">Maximum score for SA1s in area</option>
+               <option value="URP" title="URP: Usual resident population">Usual resident population</option>
+						</select>
+					</div>
+				</form>
+		</div>
+		<div id="subbut">
+			<div style="float:left;margin-right:20px;">
+				<label></label>
+				<button id="subquery" class="btn btn-default" onclick="submitQuery()">Submit New</button>
+			</div>
+		</div>
+</div>
+    <script>
+				const	ws = new WebSocket('ws://localhost:10001'); // websocket
+				const	ee = new EventEmitter();
+				const	pWaitingOn = document.getElementById("waitingon");
+				const	formBasicSearch = document.getElementById("basicsearchdetails");
+				const	formSeifas = document.getElementById("seifasform");
+				const	inNewSearchId = document.getElementById("newSearchId");
+				const	inNewSearchAddr = document.getElementById("newSearchAddr");
+				const	selTransType = document.getElementById("trans_type");
+				const	selSearchType = document.getElementById("searchType");
+				const	inPtTime = document.getElementById("pt_time");
+				const	inTravTime = document.getElementById("trav_time");
+				const	inRange = document.getElementById("range");
+				const	inKeyWord = document.getElementById("keyword");
+				const	selActiveSearches = document.getElementById("activeSearches");
+				const	selIDXTS = document.getElementById("IDXTS");
+				const	selMEASS = document.getElementById("MEASS");
+				const	outNumActive = document.getElementById("numActive");
+				const	btnSubQuery	= document.getElementById("subquery");
+				const	lblActiveSearches = document.getElementById("lblActiveSearches");
+				var	numActive = 0;
+				const	activeSearchIds = [];
+				const	activeSearchDetails = [];
+				var reloadDetails;
+				var emptyStatsTable;
+				var map;
+				var searchCMarkers = [];
+				var searchInMarkers = [];
+				var searchOutMarkers = [];
+				var searchShapes = [];
+				var currInMarkers = [];
+				var currOutMarkers = [];
+				var currCMarkers = [];
+				var currShapes = [];
+        function initMap(){
+          // new map
+					var options = {
+        	  zoom:12,
+        	  center:{
+        	  	lat:-27.46,
+        	  	lng:153
+        	  }
+					}
+					map = new google.maps.Map(document.getElementById('map'),options);
+        }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQZ1svnMe7q1CZlmG1APaTDhgboWHaQSI&libraries=places&callback=initMap">
+    </script>
+		<script type="text/javascript" src="/js/ClientQuery.min.js"></script>
+		<script type="text/javascript" src="/js/ClientMap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+{
+  "poc": "4006",
+  "res_in":
+		{
+		  "header": {
+		    "id": "a49f01e3-cd39-426b-9570-fb48f7f4e8a4",
+		    "test": false,
+		    "prepared": "2019-09-13T22:19:40.8203192Z",
+		    "sender": { "id": "ABS", "name": "Australian Bureau of Statistics" },
+		    "links": [
+		      {
+		        "href": "http://stat.data.abs.gov.au:80/sdmx-json/data/ABS_SEIFA2016_POA/4006.IRSAD+IRSD+IER+IEO.SCORE+RWSP+RWA+RWAD+RWAP+RWSR+RWST+RWSD+RWSP+MINS+MAXS+URP/all?detail=DataOnly&dimensionAtObservation=AllDimensions",
+		        "rel": "request"
+		      }
+		    ]
+		  },
+		  "dataSets": [
+		    {
+		      "action": "Information",
+		      "observations": {
+		        "0:0:0:0": [ 1120 ],
+		        "0:0:1:0": [ 10 ],
+		        "0:0:2:0": [ 93 ],
+		        "0:0:3:0": [ 418 ],
+		        "0:0:4:0": [ 10 ],
+		        "0:0:5:0": [ 97 ],
+		        "0:0:6:0": [ 1007 ],
+		        "0:0:7:0": [ 1264 ],
+		        "0:0:8:0": [ 14530 ],
+		        "0:1:0:0": [ 893 ],
+		        "0:1:4:0": [ 1 ],
+		        "0:1:1:0": [ 1 ],
+		        "0:1:7:0": [ 1067 ],
+		        "0:1:3:0": [ 22 ],
+		        "0:1:5:0": [ 6 ],
+		        "0:1:6:0": [ 754 ],
+		        "0:1:2:0": [ 5 ],
+		        "0:1:8:0": [ 14530 ],
+		        "0:2:5:0": [ 92 ],
+		        "0:2:7:0": [ 1182 ],
+		        "0:2:1:0": [ 9 ],
+		        "0:2:3:0": [ 398 ],
+		        "0:2:8:0": [ 14530 ],
+		        "0:2:6:0": [ 955 ],
+		        "0:2:2:0": [ 87 ],
+		        "0:2:4:0": [ 10 ],
+		        "0:2:0:0": [ 1076 ],
+		        "0:3:2:0": [ 78 ],
+		        "0:3:8:0": [ 14530 ],
+		        "0:3:3:0": [ 379 ],
+		        "0:3:4:0": [ 9 ],
+		        "0:3:6:0": [ 925 ],
+		        "0:3:7:0": [ 1143 ],
+		        "0:3:0:0": [ 1050 ],
+		        "0:3:5:0": [ 88 ],
+		        "0:3:1:0": [ 8 ]
+		      }
+		    }
+		  ],
+		  "structure": {
+		    "links": [
+		      {
+		        "href": "http://stat.data.abs.gov.au/sdmx-json/dataflow/ABS_SEIFA2016_POA/all",
+		        "rel": "dataflow"
+		      }
+		    ],
+		    "name": "SEIFA 2016 by Postal Area Code",
+		    "description": "SEIFA 2016 by Postal Area Code",
+		    "dimensions": {
+		      "observation": [
+		        {
+		          "keyPosition": 0,
+		          "id": "POA",
+		          "name": "Postal Area Code",
+		          "values": [ { "id": "4006", "name": "4006" } ]
+		        },
+		        {
+		          "keyPosition": 1,
+		          "id": "SEIFAINDEXTYPE",
+		          "name": "Index Type",
+		          "values": [
+		            { "id": "IEO", "name": "Index of Education and Occupation" },
+		            { "id": "IER", "name": "Index of Economic Resources" },
+		            {
+		              "id": "IRSAD",
+		              "name": "Index of Relative Socio-economic Advantage and Disadvantage"
+		            },
+		            {
+		              "id": "IRSD",
+		              "name": "Index of Relative Socio-economic Disadvantage"
+		            }
+		          ]
+		        },
+		        {
+		          "keyPosition": 2,
+		          "id": "SEIFA_MEASURE",
+		          "name": "Measure",
+		          "values": [
+		            { "id": "SCORE", "name": "Score" },
+		            { "id": "RWAD", "name": "Rank within Australia - Decile" },
+		            { "id": "RWAP", "name": "Rank within Australia - Percentile" },
+		            { "id": "RWSR", "name": "Rank within State or Territory" },
+		            {
+		              "id": "RWSD",
+		              "name": "Rank within State or Territory - Decile"
+		            },
+		            {
+		              "id": "RWSP",
+		              "name": "Rank within State or Territory - Percentile"
+		            },
+		            { "id": "MINS", "name": "Minimum score for SA1s in area" },
+		            { "id": "MAXS", "name": "Maximum score for SA1s in area" },
+		            { "id": "URP", "name": "Usual resident population" }
+		          ]
+		        },
+		        {
+		          "id": "TIME_PERIOD",
+		          "name": "Time",
+		          "values": [ { "id": "2016", "name": "2016" } ],
+		          "role": "TIME_PERIOD"
+		        }
+		      ]
+		    },
+		    "annotations": [
+		      {
+		        "title": "Statistical usage warning",
+		        "uri": "",
+		        "text": "ABS.Stat beta is continuing to be developed.  Data will be updated as soon as possible following its 11:30 am release on the ABS website."
+		      }
+		    ]
+		  }
+		}
+}

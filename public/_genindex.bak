@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1d282f">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+		<script src='/js/EventEmitter/EventEmitter.js'></script>
+</head>
+<body>
+	<header>
+		<noscript>
+			<p id="enable-js">This website requires Javascript to be enabled.</p>
+		</noscript>
+	</header>
+	<div class="area-map-container">
+    <div id="map">
+    </div>
+    <div id="searchpanel">
+				<h4>New Search</h4>
+				<form id="basicsearchdetails">
+					<div style="float:left;margin-right:20px;">
+        		<label for="id">Name your search</label>
+						<input id="newSearchId" name="id" type="text" value="id1">
+					</div>
+					<div style="float:left;margin-right:20px;">
+        		<label for="newSearchAddr">at/from address</label>
+						<input id="newSearchAddr" name="newSearchAddr" type="text" value="46 Logan Rd, Woolloongabba QLD 4102" required>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="trans_type">by mode of transportation</label>
+						<select name="trans_type" id="trans_type">
+        		  <option value="public_transport" selected>Public</option>
+        		  <option value="walking">Walking</option>
+        		  <option value="cycling">Cycling</option>
+        		  <option value="coach">Coach</option>
+        		  <option value="bus">Bus</option>
+        		  <option value="ferry">Ferry</option>
+        		  <option value="train">Train</option>
+        		  <option value="driving">Driving</option>
+						</select>
+					</div>
+					<div style="float:left;margin-right:20px;">
+        		<label for="stype">searching by</label>
+        		<select name="stype" id="searchType" onchange="stypeChange()">
+        			<option value="arrive" selected>Arrival Time</option>
+        			<option value="depart">Departure Time</option>
+						</select>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="pt_time">at or by a certain time of</label>
+						<input type="datetime-local" id="pt_time" name="pt_time"
+									 value="2019-09-12T08:30" min="2019-09-07T00:00"
+									 max="2019-10-14T00:00" required>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="trav_time">taking (x minutes)</label>
+						<input type="number" id="trav_time" name="trav_time"
+									 min="20" max="240" value="10" required>
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="width">given a window of (x minutes)</label>
+						<input type="number" name="width" id="range"
+									 min="0" max="120" value="0">
+					</div>
+					<div style="float:left;margin-right:20px;">
+						<label for="keyword">and interested in keyword</label>
+						<input type="text" name="keyword" id="keyword" value="school" required>
+					</div>
+				</form>
+    	</div>
+    <div id="advsearchpanel">
+			<h4>Active Searches (for Intersections and Unions)</h4>
+			<form id="ints_unions">
+				<div style="float:left;margin-right:20px;">
+					<label id="lblActiveSearches" for="search_ids"><span id="numActive"></span></label>
+					<select id="activeSearches" onchange="showReloaded()" disabled=true multiple name="search_ids" size=5>
+					</select>
+				</div>
+			</form>
+		</div>
+    <div id="statspanel">
+			<h4>Stats</h4>
+				<form id="seifasform">
+					<div style="float:left;margin-right:20px;">
+        		<label for="IDXTS">Socio-Economic Index</label>
+        		<select multiple size=4 name="IDXTS" id="IDXTS">
+        			<option value="IRSAD" title="IRSAD: Relative Socio-Economic Advantage and Disadvantage" selected>Relative Socio-Economic Advantage and Disadvantage</option>
+        			<option value="IRSD" title="IRSD: Relative Socio-Economic Disadvantage">Relative Socio-Economic Disadvantage</option>
+        			<option value="IER" title="IER: Economic Resources">Economic Resources</option>
+        			<option value="IEO" title="IEO: Education and Occupation">Education and Occupation</option>
+						</select>
+					</div>
+					<div style="float:left;margin-right:20px;">
+        		<label for="MEASS">by Measure</label>
+        		<select multiple size=4 name="MEASS" id="MEASS">
+							 <option value="SCORE" title="SCORE: Score" selected> Score</option>
+               <option value="RWAR" title="RWAR: Rank within Australia">Rank within Australia</option>
+               <option value="RWA" title="RWA: RANK WITHIN AUSTRALIA">RANK WITHIN AUSTRALIA</option>
+               <option value="RWAD" title="RWAD: Rank within Australia decile">Rank within Australia decile</option>
+               <option value="RWAP" title="RWAP: Rank within Australia percentile">Rank within Australia percentile</option>
+               <option value="RWSR" title="RWSR: Rank within State or Territory">Rank within State or Territory</option>
+               <option value="RWST" title="RWST: RANK WITHIN STATE AND TERRITORY">RANK WITHIN STATE AND TERRITORY</option>
+               <option value="RWSD" title="RWSD: Rank within state or territory decile">Rank within state or territory decile</option>
+               <option value="RWSP" title="RWSP: Rank within state or territory percentile">Rank within state or territory percentile</option>
+               <option value="MINS" title="MINS: Minimum score for SA1s in area">Minimum score for SA1s in area</option>
+               <option value="MAXS" title="MAXS: Maximum score for SA1s in area">Maximum score for SA1s in area</option>
+               <option value="URP" title="URP: Usual resident population">Usual resident population</option>
+						</select>
+					</div>
+				</form>
+		</div>
+		<div id="subbut">
+			<div style="float:left;margin-right:20px;">
+				<label></label>
+				<button id="subquery" class="btn btn-default" onclick="submitQuery()">Submit New</button>
+			</div>
+		</div>
+</div>
+    <script>
+				const	ws = new WebSocket('ws://HOSTIP:10001'); // websocket
+				const	ee = new EventEmitter();
+
+				const	formBasicSearch = document.getElementById("basicsearchdetails");
+				const	formIntsUnions = document.getElementById("ints_unions");
+				const	formSeifas = document.getElementById("seifasform");
+
+				const	inNewSearchId = document.getElementById("newSearchId");
+				const	inNewSearchAddr = document.getElementById("newSearchAddr");
+				const	selTransType = document.getElementById("trans_type");
+				const	selSearchType = document.getElementById("searchType");
+				const	inPtTime = document.getElementById("pt_time");
+				const	inTravTime = document.getElementById("trav_time");
+				const	inRange = document.getElementById("range");
+				const	inKeyWord = document.getElementById("keyword");
+				const	selActiveSearches = document.getElementById("activeSearches");
+				const	selIDXTS = document.getElementById("IDXTS");
+				const	selMEASS = document.getElementById("MEASS");
+				const	outNumActive = document.getElementById("numActive");
+				const	btnSubQuery	= document.getElementById("subquery");
+				const	lblActiveSearches = document.getElementById("lblActiveSearches");
+
+				var	numActive = 0;
+				const	activeSearchIds = [];
+				const	activeSearchDetails = [];
+				var reloadDetails;
+				var emptyStatsTable;
+				var reloading = false;
+
+				window.onload = function(){
+					emptyStatsTable = statsTableInit();
+				}
+
+        ws.onopen = function() {
+            console.log('websocket is connected ...');
+            ws.send('connected')
+        }
+
+        ws.onmessage = function(event) {
+            try{
+                let msg = JSON.parse(event.data);
+                console.log(msg);
+								setTimeout(() => {
+									ee.emit(msg[0], msg[1]);
+								}, 0);
+            }
+            catch(err){
+                console.log(event.data);
+            }
+        }
+
+				function stypeChange(){
+					let typeSel = getSelectValues(selSearchType)[0];
+
+					// --- Union/Intersection ---
+					if(typeSel === 'union' || typeSel === 'intersect'){
+						selActiveSearches.disabled=false;
+						selActiveSearches.multiple=true;
+						inNewSearchAddr.disabled=true;
+						inNewSearchId.disabled=false;
+						selTransType.disabled=true;
+						inPtTime.disabled=true;
+						inTravTime.disabled=true;
+						inRange.disabled=true;
+						inKeyWord.disabled=true;
+						selIDXTS.disabled=true;
+						selMEASS.disabled=true;
+						if(typeSel === 'union'){
+							btnSubQuery.innerHTML = 'Submit Union';
+						}
+						else{
+							btnSubQuery.innerHTML = 'Submit Intersection';
+						}
+					}
+					// --- RELOAD ---
+					else if(typeSel === 'reload'){
+						selActiveSearches.disabled=false;
+						selActiveSearches.multiple=false;
+						inNewSearchId.disabled=true;
+						btnSubQuery.innerHTML = 'Reload Existing';
+					}
+					// --- BASIC ---
+					else{
+						selActiveSearches.disabled=true;
+						inNewSearchId.disabled=false;
+						inNewSearchAddr.disabled=false;
+						selTransType.disabled=false;
+						inPtTime.disabled=false;
+						inTravTime.disabled=false;
+						inRange.disabled=false;
+						inKeyWord.disabled=false;
+						selIDXTS.disabled=false;
+						selMEASS.disabled=false;
+						btnSubQuery.innerHTML = 'Submit New';
+					}
+				}
+
+				function showReloaded(){
+					let typeSel = getSelectValues(selSearchType)[0];
+
+					if(typeSel === 'reload'){
+							let reloadSel = parseInt(getSelectValues(selActiveSearches)[0],10);
+
+							if(reloadSel !== 'undefined'){
+								reloadDetails = activeSearchDetails[reloadSel];
+								for(let prop in reloadDetails){
+									els = document.getElementsByName(prop);
+									for(let el of els){
+										if(el.tagName === 'INPUT' || els.tagName === 'SELECT'){
+											el.value = reloadDetails[prop];
+										}
+									}
+								}
+							}
+							else{
+								console.log('showReloaded: undefined arr idx');
+							}
+					}
+				}
+
+				function updateSelActiveSearches(){
+					// add to the GUI elem of searches
+					let option = document.createElement("option");
+					option.text = inNewSearchId.value;
+					option.value = numActive-1;
+					selActiveSearches.add(option);
+					selActiveSearches.selectedIndex = numActive-1;
+				}
+
+				function submitQuery(){
+
+					reloading = false;
+					let typeSel = getSelectValues(selSearchType)[0];
+
+					if(typeSel !== 'reload' && activeSearchIds.includes(inNewSearchId.value)){
+							alert("A search of this name already exists");
+					}
+					else{
+						clearShapes();
+						clearInMarkers();
+						clearOutMarkers();
+
+						let searchFields = {};
+
+						// --- Union/Intersection ---
+						if(typeSel.value === 'union' || typeSel.value === 'intersect'){
+							let intUnionElements = formIntsUnions.elements;
+							searchFields[intUnionElements.name] = getSelectValues(intUnionElements)[0];
+
+							let seifasElements = formSeifas.elements;
+							for(let i=0; i < seifasElements.length; i++){ // >
+								searchFields[seifasElements[i].name] = getSelectValues(seifasElements[i]);
+							}
+						}
+						// --- RELOAD ---
+						else if(typeSel.value === 'reload'){
+							let reloadSel = getSelectValues(selActiveSearches)[0];
+							if(reloadSel === 'undefined'){
+								alert('You must select an active/existing search for reloading');
+								return;
+							}
+							else{
+								if(typeof reloadSel === 'number'){
+									reloading = true;
+									ee.emit('inplaces',searchInMarkers[reloadSel]);
+									ee.emit('outplaces',searchOutMarkers[reloadSel]);
+									ee.emit('shapes',searchShapes[reloadSel]);
+								}
+								else{
+									console.log('reload: need this to be a number');
+								}
+							}
+						}
+						// --- BASIC ---
+						else{
+							let basicElements = formBasicSearch.elements;
+							for(let i=0; i < basicElements.length; i++){ // >
+								if(basicElements[i].tagName === 'INPUT'){
+            	    searchFields[basicElements[i].name] = basicElements[i].value;
+								}
+								else if(basicElements[i].tagName === 'SELECT'){
+									searchFields[basicElements[i].name] = getSelectValues(basicElements[i])[0];
+								}
+							}
+
+							let seifasElements = formSeifas.elements;
+							for(let i=0; i < seifasElements.length; i++){ // >
+								searchFields[seifasElements[i].name] = getSelectValues(seifasElements[i]);
+							}
+						}
+
+						ws.send(JSON.stringify(searchFields));
+
+						if(typeSel !== 'reload'){
+
+							activeSearchDetails.push(searchFields);
+							activeSearchIds.push(inNewSearchId.value);
+
+							if(++numActive === 1){
+  							let option = document.createElement("option");
+  							option.text = "Reload Existing Search";
+								option.value = "reload";
+  							selSearchType.add(option);
+								outNumActive.innerHTML = `Select from 1 Existing Search`;
+							}
+							else{
+								outNumActive.innerHTML = `Select from ${numActive} Existing Searches`;
+							}
+							if(numActive === 2){
+  							let option = document.createElement("option");
+  							option.text = "Intersection of Searches";
+								option.value = "intersect";
+  							selSearchType.add(option);
+  							option = document.createElement("option");
+  							option.text = "Union of Searches";
+								option.value = "union";
+  							selSearchType.add(option);
+							}
+
+							updateSelActiveSearches();
+						}
+					}
+				}
+
+				// Return an array of the selected opion values
+				// select is an HTML select element
+				function getSelectValues(select){
+					var result = [];
+  				var options = select && select.selectedOptions;
+
+					for (var i=0, iLen=options.length; i<iLen; i++) { //>
+  				  result.push(options[i].value || options[i].text);
+  				}
+  				return result;
+				}
+
+				var map;
+				var searchInMarkers = [];
+				var searchOutMarkers = [];
+				var searchShapes = [];
+
+				var currInMarkers = [];
+				var currOutMarkers = [];
+				var currShapes = [];
+
+        function initMap(){
+          // new map
+					var options = {
+        	  zoom:12,
+        	  center:{
+        	  	lat:STARTLAT,
+        	  	lng:STARTLNG
+        	  }
+					}
+					map = new google.maps.Map(document.getElementById('map'),options);
+        }
+
+				function addShape(waypoints) {
+        	var polygon = new google.maps.Polygon({
+          	paths: waypoints,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#00FF00',
+            fillOpacity: 0.35
+        	});
+        	currShapes.push(polygon);
+      	}
+
+				function addInMarker(placeMarker) {
+        	var marker = new google.maps.Marker({
+          	position: placeMarker.latlng,
+          	map: map,
+						icon: inIcon,
+						clicked: false
+        	});
+          if(placeMarker.content){
+          	var infoWindow = new google.maps.InfoWindow({
+            	content:buildInfoContent(placeMarker.content),
+          	});
+						infoWindow.addListener('closeclick', function(){
+							marker.clicked = false;
+						});
+						marker.addListener('click', function(){
+							marker.clicked = true;
+							infoWindow.open(map,marker);
+						});
+						marker.addListener('mouseover', function(){
+							infoWindow.open(map,marker);
+						});
+						marker.addListener('mouseout', function(){
+							if(!marker.clicked){
+								infoWindow.close(marker);
+							}
+						});
+          }
+        	currInMarkers.push(marker);
+					setInMarker();
+      	}
+
+				function addOutMarker(placeMarker) {
+        	var marker = new google.maps.Marker({
+          	position: placeMarker.latlng,
+          	map: map,
+						icon: outIcon,
+						clicked: false
+        	});
+          if(placeMarker.content){
+          	var infoWindow = new google.maps.InfoWindow({
+            	content:buildInfoContent(placeMarker.content),
+          	});
+						infoWindow.addListener('closeclick', function(){
+							marker.clicked = false;
+						});
+						marker.addListener('click', function(){
+							marker.clicked = true;
+							infoWindow.open(map,marker);
+						});
+						marker.addListener('mouseover', function(){
+							infoWindow.open(map,marker);
+						});
+						marker.addListener('mouseout', function(){
+							if(!marker.clicked){
+								infoWindow.close(marker);
+							}
+						});
+          }
+        	currOutMarkers.push(marker);
+					setOutMarker();
+      	}
+
+				function buildInfoContent(content){
+					return '<div id="content">'
+						+ '<p><b>Click to Fix InfoWindow</b></p>'
+						+ '<div id="siteNotice"></div>'
+						+ '<h5 id="firstHeading" classHeading>'
+						+ content.name + '</h5>'
+						+ '<div id="bodyContent">' + '<p>'
+						+ content.addr + '</p>'
+						+ json2table(content.seifa) + '</div></div>'
+				}
+
+				function setInMarker(){
+					currInMarkers[currInMarkers.length-1].setMap(map);
+				}
+
+				function setOutMarker(){
+					currOutMarkers[currOutMarkers.length-1].setMap(map);
+				}
+
+      	function clearInMarkers() {
+					for(let placeMarker of currInMarkers){
+						placeMarker.setMap(null);
+					}
+					currInMarkers = [];
+      	}
+
+      	function clearOutMarkers() {
+					for(let placeMarker of currOutMarkers){
+						placeMarker.setMap(null);
+					}
+					currOutMarkers = [];
+      	}
+
+      	function clearShapes() {
+					for(let currShape of currShapes){
+						currShape.setMap(null);
+					}
+					currShapes = [];
+      	}
+
+				function procShapes(shapesArr){
+					if(!reloading){
+						searchShapes.push(shapesArr);
+					}
+					for(let shape of shapesArr){
+						addShape(shape);
+					}
+					for(let currShape of currShapes){
+						currShape.setMap(map);
+					}
+				}
+
+				const inIcon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+				const outIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+
+				function procInMarkers(markersArr){
+					if(!reloading){
+						searchInMarkers.push(markersArr);
+					}
+					for(placeMarker of markersArr){
+						addInMarker(placeMarker,inIcon);
+					}
+				}
+
+				function procOutMarkers(markersArr){
+					if(!reloading){
+						searchOutMarkers.push(markersArr);
+					}
+					for(placeMarker of markersArr){
+						addOutMarker(placeMarker,outIcon);
+					}
+				}
+
+				ee.addListeners({
+					'inplaces':procInMarkers,
+					'outplaces':procOutMarkers,
+					'shapes':procShapes
+				});
+
+				function statsTableInit(){
+					var headerRow = '<tr><th></th><th colspan="12">Measures</th></tr>';
+					var bodyRows = '<tr><td>Index</td>';
+					for(let opt of selMEASS.options){
+						bodyRows += '<td>' + opt.value + '</td>';
+					}
+					bodyRows += '</tr>';
+					for(let opt of selIDXTS.options){
+						bodyRows += '<tr><td>' + opt.value  + '</td>';
+						for(let opt2 of selMEASS.options){
+							bodyRows += '<td>' + opt.value  + opt2.value  + '</td>';
+						}
+						bodyRows += '</tr>';
+					}
+					return '<table class=""><thead><tr>'
+									+ headerRow + '</tr></thead><tbody>'
+									+ bodyRows + '</tbody></table>';
+				}
+
+				function json2table(jsonStats){
+					let placeStatsTable = emptyStatsTable;
+					for(let indxs in jsonStats){
+						for(let meass in jsonStats[indxs]){
+							let tableEntry = indxs + meass;
+							if(placeStatsTable.includes(tableEntry)){
+								placeStatsTable = placeStatsTable.replace(tableEntry,jsonStats[indxs][meass]);
+							}
+						}
+					}
+					for(let indxs of selIDXTS.options){
+						for(let meass of selMEASS.options){
+							let tableEntry = indxs.value + meass.value;
+							placeStatsTable = placeStatsTable.replace(tableEntry,'---');
+						}
+					}
+					return placeStatsTable;
+				}
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=GMAPKEY&libraries=places&callback=initMap">
+    </script>
+</body>
+</html>

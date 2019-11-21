@@ -1,0 +1,21 @@
+[
+    {
+        "stype": "depart",
+        "id": "public transport from Trafalgar Square",
+        "lat": 51.507609,
+        "lng": -0.128315,
+        "trans_type": "public_transport",
+        "pt_time": "2019-09-06T08:00:00Z",
+        "trav_time": 15
+    },
+    {
+        "stype": "arrive",
+        "id": "public transport to Trafalgar Square",
+        "lat": 51.507609,
+        "lng": -0.128315,
+        "trans_type": "public_transport",
+        "pt_time": "2019-09-06T08:00:00Z",
+        "trav_time": 15,
+        "width": 60
+    }
+]

@@ -1,0 +1,24 @@
+{
+	"formatted_addresses": [ "130 University Dr, Callaghan NSW 2308, Australia" ],
+	"street_nums": [ "130" ],
+	"routes": [ "University Drive" ],
+	"localities": [ "Callaghan" ],
+	"admin_lvls2": [ "Newcastle City Council" ],
+	"admin_lvls1": [ "New South Wales" ],
+	"countries": [ "Australia" ],
+	"post_codes": [ "2308" ],
+	"coords": [ { "lat": -32.8926458, "lng": 151.7038411 } ],
+	"loc_types": [ "ROOFTOP" ],
+	"view_ports": [ {
+			"ne": {
+				"lat": -32.8912968197085,
+				"lng": 151.7051900802915
+			},
+	    "sw": {
+				"lat": -32.8939947802915,
+				"lng": 151.7024921197085
+			}
+		}],
+	"place_ids": [ "ChIJxz4BgHsVc2sRn6M8m0Auolk" ]
+}
+

@@ -1,0 +1,40 @@
+.container{
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.container #map{
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 50%;
+  float: left;
+}
+
+.container #userpanel{
+  height: 100vh;
+  overflow: auto;
+  width: 50%;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  float: right;
+  padding: 10px;
+  user-select: none;
+}
+
+.container #add-new-search{
+  margin-top: 0;
+  display: block;
+  float: none;
+  width: 100%;
+  margin-bottom: 15px;
+  background: #38576a;
+  border-color: #38576a;
+  color: #ffff;
+  font-weight: 600;
+  padding: 10px 15px;
+  font-size: 16px;
+}

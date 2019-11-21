@@ -1,0 +1,46 @@
+{
+  "IEO": {
+    "SCORE": 1120,
+    "RWAD": 10,
+    "RWAP": 93,
+    "RWSR": 418,
+    "RWSD": 10,
+    "RWSP": 97,
+    "MINS": 1007,
+    "MAXS": 1264,
+    "URP": 14530
+  },
+  "IER": {
+    "SCORE": 893,
+    "RWSD": 1,
+    "RWAD": 1,
+    "MAXS": 1067,
+    "RWSR": 22,
+    "RWSP": 6,
+    "MINS": 754,
+    "RWAP": 5,
+    "URP": 14530
+  },
+  "IRSAD": {
+    "RWSP": 92,
+    "MAXS": 1182,
+    "RWAD": 9,
+    "RWSR": 398,
+    "URP": 14530,
+    "MINS": 955,
+    "RWAP": 87,
+    "RWSD": 10,
+    "SCORE": 1076
+  },
+  "IRSD": {
+    "RWAP": 78,
+    "URP": 14530,
+    "RWSR": 379,
+    "RWSD": 9,
+    "MINS": 925,
+    "MAXS": 1143,
+    "SCORE": 1050,
+    "RWSP": 88,
+    "RWAD": 8
+  }
+}

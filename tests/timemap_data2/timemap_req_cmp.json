@@ -1,0 +1,49 @@
+{
+  "departure_searches": [
+    {
+      "id": "public transport from Trafalgar Square",
+      "coords": {
+        "lat": 51.507609,
+        "lng": -0.128315
+      },
+      "transportation": {
+        "type": "public_transport"
+      },
+      "departure_time": "2019-09-07T08:00:00Z",
+      "travel_time": 900,
+      "properties" : [
+        "is_only_walking"
+      ]
+    },
+    {
+      "id": "driving from Trafalgar Square",
+      "coords": {
+        "lat": 51.507609,
+        "lng": -0.128315
+      },
+      "transportation": {
+        "type": "driving"
+      },
+      "departure_time": "2019-09-07T08:00:00Z",
+      "travel_time": 900
+    }
+  ],
+  "unions": [
+    {
+      "id": "union of driving and public transport",
+      "search_ids": [
+        "driving from Trafalgar Square",
+        "public transport from Trafalgar Square"
+      ]
+    }
+  ],
+  "intersections": [
+    {
+      "id": "intersection of driving and public transport",
+      "search_ids": [
+        "driving from Trafalgar Square",
+        "public transport from Trafalgar Square"
+      ]
+    }
+  ]
+}

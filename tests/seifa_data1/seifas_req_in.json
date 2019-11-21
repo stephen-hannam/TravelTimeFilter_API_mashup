@@ -1,0 +1,5 @@
+{
+  "poc": "4006",
+  "idxts": ["IRSAD","IRSD","IER","IEO"],
+  "meass": ["SCORE","RWSP","RWA","RWAD","RWAP","RWSR","RWST","RWSD","RWSP","MINS","MAXS","URP"]
+}
