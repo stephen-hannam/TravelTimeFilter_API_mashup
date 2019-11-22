@@ -119,7 +119,7 @@ function checkAllPolygons(shells, holes){
 }
 
 //const googleMapClient = require('@google/maps').createClient({
-//    key:'AIzaSyCQZ1svnMe7q1CZlmG1APaTDhgboWHaQSI'
+//    key:''
 //});
 //const latlng = '40.714224,-73.961452';
 //const latlng = {lat:40.714224,lng:-73.961452};
