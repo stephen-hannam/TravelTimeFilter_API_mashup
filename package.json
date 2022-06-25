@@ -19,7 +19,7 @@
     "geolib": "^3.0.4",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "nyc": "^14.1.1",
     "underscore": "^1.9.1",
     "util": "^0.12.1",
